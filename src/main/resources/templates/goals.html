@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Financial Goals | BudgetManager</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/goals.css}">
+</head>
+
+<body>
+
+<div class="app-container">
+
+    <!-- ==================================================
+                         SIDEBAR
+    =================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ▣
+            </div>
+
+            <h2>
+                Budget<span>Manager</span>
+            </h2>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a th:href="@{/dashboard}"
+               class="nav-link">
+
+                <span class="nav-icon">▦</span>
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a th:href="@{/transactions}"
+               class="nav-link">
+
+                <span class="nav-icon">⇄</span>
+                <span>Transactions</span>
+
+            </a>
+
+
+            <a th:href="@{/budgets}"
+               class="nav-link">
+
+                <span class="nav-icon">₹</span>
+                <span>Budget</span>
+
+            </a>
+
+
+            <a th:href="@{/goals}"
+               class="nav-link active">
+
+                <span class="nav-icon">◎</span>
+                <span>Goals</span>
+
+            </a>
+
+
+            <a th:href="@{/reports}"
+               class="nav-link">
+
+                <span class="nav-icon">▥</span>
+                <span>Reports</span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a th:href="@{/settings}"
+               class="nav-link">
+
+                <span class="nav-icon">⚙</span>
+                <span>Settings</span>
+
+            </a>
+
+
+            <form th:action="@{/logout}"
+                  method="post"
+                  class="logout-form">
+
+                <button type="submit"
+                        class="nav-link logout-btn">
+
+                    <span class="nav-icon">↪</span>
+                    <span>Logout</span>
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ==================================================
+                       MAIN CONTENT
+    =================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- ==================================================
+                             HEADER
+        =================================================== -->
+
+        <header class="page-header">
+
+            <div class="heading-area">
+
+                <div class="heading-badge">
+                    ◎ Financial Planning
+                </div>
+
+                <h1>
+                    Your Financial Goals
+                </h1>
+
+                <p>
+                    Save little by little and turn your plans
+                    into reality.
+                </p>
+
+            </div>
+
+
+            <div class="header-actions">
+
+                <button type="button"
+                        class="theme-toggle"
+                        id="themeToggle"
+                        aria-label="Change theme">
+
+                    <span id="themeIcon">🌙</span>
+
+                </button>
+
+
+                <a th:href="@{/goals/add}"
+                   class="add-goal-btn">
+
+                    <span>＋</span>
+                    Add New Goal
+
+                </a>
+
+            </div>
+
+        </header>
+
+
+        <!-- ==================================================
+                        INTRO / HERO SECTION
+        =================================================== -->
+
+        <section class="goal-hero">
+
+            <div class="hero-icon">
+                ◎
+            </div>
+
+
+            <div class="hero-content">
+
+                <span class="hero-label">
+                    MY SAVINGS PLAN
+                </span>
+
+                <h2>
+                    What are you saving for?
+                </h2>
+
+                <p>
+                    Create a goal, add your savings and watch
+                    your progress grow.
+                </p>
+
+            </div>
+
+
+            <a th:href="@{/goals/add}"
+               class="hero-button">
+
+                Create Goal
+                <span>→</span>
+
+            </a>
+
+        </section>
+
+
+        <!-- ==================================================
+                        SECTION HEADING
+        =================================================== -->
+
+        <div class="section-heading">
+
+            <div>
+
+                <h2>
+                    My Goals
+                </h2>
+
+                <p>
+                    Keep track of everything you're saving for.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==================================================
+                           GOALS GRID
+        =================================================== -->
+
+        <section class="goals-grid">
+
+
+            <!-- ==================================================
+                              REAL GOAL
+            =================================================== -->
+
+            <article class="goal-card"
+                     th:each="goal : ${goals}">
+
+
+                <!-- GOAL HEADER -->
+
+                <div class="goal-top">
+
+                    <div class="goal-icon">
+                        ◎
+                    </div>
+
+
+                    <div class="goal-title">
+
+                        <span class="goal-label">
+                            SAVING GOAL
+                        </span>
+
+                        <h3 th:text="${goal.title}">
+                            Buy Laptop
+                        </h3>
+
+
+                        <p>
+
+                            <span class="calendar-icon">
+                                ◷
+                            </span>
+
+                            Target
+
+                            <span th:text="${goal.targetDate}">
+                                2026-12-31
+                            </span>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================================
+                              SAVED / TARGET
+                =================================================== -->
+
+                <div class="money-box">
+
+
+                    <div class="money-item">
+
+                        <div class="money-symbol saved-symbol">
+                            ₹
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                You Saved
+                            </span>
+
+                            <strong>
+
+                                ₹<span th:text="${goal.savedAmount}">
+                                    0
+                                </span>
+
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="money-divider"></div>
+
+
+                    <div class="money-item target-money">
+
+                        <div>
+
+                            <span>
+                                Your Target
+                            </span>
+
+                            <strong>
+
+                                ₹<span th:text="${goal.targetAmount}">
+                                    0
+                                </span>
+
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================================
+                               PROGRESS
+                =================================================== -->
+
+                <div class="goal-progress">
+
+
+                    <div class="progress-header">
+
+                        <span>
+                            Progress
+                        </span>
+
+
+                        <strong th:text="${
+                            goal.targetAmount != null
+                            && goal.targetAmount.doubleValue() > 0
+                            ?
+                            #numbers.formatDecimal(
+                                (goal.savedAmount.doubleValue()
+                                / goal.targetAmount.doubleValue()) * 100,
+                                1,
+                                1
+                            ) + '%'
+                            :
+                            '0%'
+                        }">
+
+                            0%
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="progress-bar">
+
+                        <div class="progress-fill"
+
+                             th:style="'width:' + ${
+                                goal.targetAmount != null
+                                && goal.targetAmount.doubleValue() > 0
+                                ?
+                                T(java.lang.Math).min(
+                                    (goal.savedAmount.doubleValue()
+                                    / goal.targetAmount.doubleValue()) * 100.0,
+                                    100.0
+                                )
+                                :
+                                0.0
+                             } + '%'">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================================
+                              ACTIONS
+                =================================================== -->
+
+                <div class="goal-actions">
+
+
+                    <a th:href="@{/goals/{id}/add-savings(id=${goal.id})}"
+                       class="savings-btn">
+
+                        <span>＋</span>
+
+                        Add Savings
+
+                    </a>
+
+
+                    <form th:action="@{/goals/{id}/delete(id=${goal.id})}"
+                          method="post">
+
+
+                        <button type="submit"
+                                class="delete-btn"
+                                onclick="return confirm('Are you sure you want to delete this goal?')">
+
+                            <span>⌫</span>
+
+                            Delete
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- ==================================================
+                          EMPTY STATE
+        =================================================== -->
+
+        <section class="empty-goals"
+                 th:if="${#lists.isEmpty(goals)}">
+
+
+            <div class="empty-icon">
+                ◎
+            </div>
+
+
+            <h2>
+                Start with your first goal
+            </h2>
+
+
+            <p>
+                Saving for a phone, laptop, trip or something
+                special? Create a goal and start saving today.
+            </p>
+
+
+            <a th:href="@{/goals/add}"
+               class="empty-button">
+
+                ＋ Create Your First Goal
+
+            </a>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<!-- ==================================================
+                     DARK MODE SCRIPT
+=================================================== -->
+
+<script>
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            const themeToggle =
+                document.getElementById("themeToggle");
+
+            const themeIcon =
+                document.getElementById("themeIcon");
+
+
+            /*
+             * Check previously selected theme
+             */
+
+            const savedTheme =
+                localStorage.getItem("budgetManagerTheme");
+
+
+            if (savedTheme === "dark") {
+
+                document.body.classList.add("dark-mode");
+
+                themeIcon.textContent = "☀️";
+
+            } else {
+
+                themeIcon.textContent = "🌙";
+
+            }
+
+
+            /*
+             * Change theme
+             */
+
+            themeToggle.addEventListener(
+                "click",
+                function () {
+
+                    document.body.classList.toggle(
+                        "dark-mode"
+                    );
+
+
+                    if (
+                        document.body.classList
+                            .contains("dark-mode")
+                    ) {
+
+                        localStorage.setItem(
+                            "budgetManagerTheme",
+                            "dark"
+                        );
+
+                        themeIcon.textContent = "☀️";
+
+                    } else {
+
+                        localStorage.setItem(
+                            "budgetManagerTheme",
+                            "light"
+                        );
+
+                        themeIcon.textContent = "🌙";
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>

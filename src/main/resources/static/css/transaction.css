@@ -1,0 +1,239 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+
+    background:
+        radial-gradient(circle at top right,
+        #e4ddff,
+        transparent 35%),
+        #f3f4f9;
+
+    color: #15182a;
+
+    min-height: 100vh;
+}
+
+.page-container {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px 20px;
+}
+
+.transaction-card {
+    width: 100%;
+    max-width: 620px;
+
+    background: white;
+
+    border: 1px solid #dedfe8;
+    border-radius: 18px;
+
+    padding: 35px;
+
+    box-shadow: 0 15px 45px
+        rgba(42, 32, 90, 0.10);
+}
+
+
+/* HEADER */
+
+.card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 17px;
+
+    margin-bottom: 32px;
+}
+
+.back-btn {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+
+    background: #eeeaff;
+    color: #5d3de4;
+
+    border-radius: 9px;
+
+    font-size: 20px;
+}
+
+.card-header h1 {
+    font-size: 25px;
+}
+
+.card-header p {
+    margin-top: 6px;
+
+    color: #747a8d;
+
+    font-size: 13px;
+}
+
+
+/* FORM */
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    margin-bottom: 9px;
+}
+
+.form-group label span {
+    color: #9296a5;
+    font-weight: normal;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+
+    padding: 14px 15px;
+
+    border: 1px solid #d5d7e0;
+
+    border-radius: 9px;
+
+    background: white;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #6747ed;
+
+    box-shadow: 0 0 0 3px
+        rgba(103, 71, 237, 0.10);
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+
+/* AMOUNT */
+
+.amount-input {
+    position: relative;
+}
+
+.amount-input span {
+    position: absolute;
+
+    left: 15px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-weight: bold;
+
+    color: #555b70;
+}
+
+.amount-input input {
+    padding-left: 35px;
+}
+
+
+/* BUTTONS */
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    margin-top: 30px;
+}
+
+.cancel-btn,
+.save-btn {
+    padding: 13px 22px;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background: white;
+
+    border: 1px solid #d4d6df;
+
+    color: #555b6c;
+}
+
+.save-btn {
+    border: none;
+    color: white;
+}
+
+.income-save {
+    background: #5b3de3;
+}
+
+.expense-save {
+    background: #d94a4a;
+}
+
+.income-save:hover {
+    background: #4c2fd0;
+}
+
+.expense-save:hover {
+    background: #c63c3c;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .transaction-card {
+        padding: 25px 20px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .cancel-btn,
+    .save-btn {
+        width: 100%;
+        text-align: center;
+    }
+}

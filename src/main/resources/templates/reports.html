@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Reports | BudgetManager</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/reports.css}">
+
+</head>
+
+<body>
+
+<div class="app-container">
+
+
+    <!-- =====================================================
+                         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ▣
+            </div>
+
+            <h2>
+                Budget<span>Manager</span>
+            </h2>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a th:href="@{/dashboard}"
+               class="nav-link">
+
+                <span class="nav-icon">▦</span>
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a th:href="@{/transactions}"
+               class="nav-link">
+
+                <span class="nav-icon">⇄</span>
+                <span>Transactions</span>
+
+            </a>
+
+
+            <a th:href="@{/budgets}"
+               class="nav-link">
+
+                <span class="nav-icon">₹</span>
+                <span>Budget</span>
+
+            </a>
+
+
+            <a th:href="@{/goals}"
+               class="nav-link">
+
+                <span class="nav-icon">◎</span>
+                <span>Goals</span>
+
+            </a>
+
+
+            <a th:href="@{/reports}"
+               class="nav-link active">
+
+                <span class="nav-icon">▥</span>
+                <span>Reports</span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a th:href="@{/settings}"
+               class="nav-link">
+
+                <span class="nav-icon">⚙</span>
+                <span>Settings</span>
+
+            </a>
+
+
+            <form th:action="@{/logout}"
+                  method="post"
+                  class="logout-form">
+
+                <button type="submit"
+                        class="nav-link logout-btn">
+
+                    <span class="nav-icon">↪</span>
+                    <span>Logout</span>
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+                         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+                             HEADER
+        ================================================== -->
+
+        <header class="page-header">
+
+            <div class="heading-area">
+
+                <p class="page-label">
+                    ▥ FINANCIAL ANALYTICS
+                </p>
+
+                <h1>
+                    Your Money Report
+                </h1>
+
+                <p class="page-description">
+                    A simple view of your income, spending and savings.
+                </p>
+
+            </div>
+
+
+            <button type="button"
+                    class="theme-toggle"
+                    id="themeToggle"
+                    aria-label="Change theme">
+
+                <span id="themeIcon">
+                    🌙
+                </span>
+
+            </button>
+
+        </header>
+
+
+        <!-- =================================================
+                        REPORT INTRO BANNER
+        ================================================== -->
+
+        <section class="report-banner">
+
+            <div class="banner-icon">
+                ▥
+            </div>
+
+
+            <div class="banner-content">
+
+                <span>
+                    YOUR FINANCIAL OVERVIEW
+                </span>
+
+                <h2>
+                    Know where your money goes
+                </h2>
+
+                <p>
+                    Compare what you earn, what you spend
+                    and how much you save.
+                </p>
+
+            </div>
+
+
+            <div class="banner-decoration">
+                ₹
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+                           SUMMARY CARDS
+        ================================================== -->
+
+        <section class="summary-grid">
+
+
+            <!-- TOTAL INCOME -->
+
+            <div class="summary-card income-card">
+
+                <div class="summary-icon income-icon">
+                    ↑
+                </div>
+
+
+                <div class="summary-content">
+
+                    <p>
+                        Total Income
+                    </p>
+
+
+                    <h2>
+                        ₹<span th:text="${totalIncome}">
+                            0
+                        </span>
+                    </h2>
+
+
+                    <span class="summary-note">
+                        Money received
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- TOTAL EXPENSE -->
+
+            <div class="summary-card expense-card">
+
+                <div class="summary-icon expense-icon">
+                    ↓
+                </div>
+
+
+                <div class="summary-content">
+
+                    <p>
+                        Total Expenses
+                    </p>
+
+
+                    <h2>
+                        ₹<span th:text="${totalExpense}">
+                            0
+                        </span>
+                    </h2>
+
+
+                    <span class="summary-note">
+                        Money spent
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- NET SAVINGS -->
+
+            <div class="summary-card savings-card">
+
+                <div class="summary-icon savings-icon">
+                    ₹
+                </div>
+
+
+                <div class="summary-content">
+
+                    <p>
+                        Net Savings
+                    </p>
+
+
+                    <h2>
+                        ₹<span th:text="${netSavings}">
+                            0
+                        </span>
+                    </h2>
+
+
+                    <span class="summary-note">
+                        Money remaining
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+                     MONTHLY INCOME VS EXPENSE
+        ================================================== -->
+
+        <section class="report-card monthly-report-card">
+
+
+            <div class="section-header">
+
+                <div class="section-title-area">
+
+                    <div class="section-icon">
+                        ▥
+                    </div>
+
+
+                    <div>
+
+                        <h2>
+                            Income vs Expenses
+                        </h2>
+
+                        <p>
+                            Compare your monthly money in and money out.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= CHART ================= -->
+
+            <div class="chart-scroll"
+                 th:if="${!monthlyReport.isEmpty()}">
+
+                <div class="monthly-chart">
+
+
+                    <div class="month-column"
+                         th:each="entry : ${monthlyReport}">
+
+
+                        <div class="bars">
+
+
+                            <!-- INCOME BAR -->
+
+                            <div class="report-income-bar"
+
+                                 th:style="'height:' +
+                                 ${entry.value[0].doubleValue() > 0
+                                    ? T(java.lang.Math).max(
+                                        8.0,
+                                        T(java.lang.Math).min(
+                                            entry.value[0].doubleValue() / 120.0,
+                                            200.0
+                                        )
+                                      )
+                                    : 4.0}
+                                 + 'px'"
+
+                                 th:title="'Income: ₹' +
+                                 ${entry.value[0]}">
+
+                            </div>
+
+
+                            <!-- EXPENSE BAR -->
+
+                            <div class="report-expense-bar"
+
+                                 th:style="'height:' +
+                                 ${entry.value[1].doubleValue() > 0
+                                    ? T(java.lang.Math).max(
+                                        8.0,
+                                        T(java.lang.Math).min(
+                                            entry.value[1].doubleValue() / 120.0,
+                                            200.0
+                                        )
+                                      )
+                                    : 4.0}
+                                 + 'px'"
+
+                                 th:title="'Expense: ₹' +
+                                 ${entry.value[1]}">
+
+                            </div>
+
+                        </div>
+
+
+                        <span class="month-name"
+                              th:text="${entry.key}">
+
+                            JULY
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= LEGEND ================= -->
+
+            <div class="chart-legend"
+                 th:if="${!monthlyReport.isEmpty()}">
+
+                <span class="legend-item">
+
+                    <span class="legend-dot income-dot"></span>
+
+                    Income
+
+                </span>
+
+
+                <span class="legend-item">
+
+                    <span class="legend-dot expense-dot"></span>
+
+                    Expenses
+
+                </span>
+
+            </div>
+
+
+            <!-- ================= NO DATA ================= -->
+
+            <div class="no-chart-data"
+                 th:if="${monthlyReport.isEmpty()}">
+
+                <div class="empty-small-icon">
+                    ▥
+                </div>
+
+                <h3>
+                    No chart data yet
+                </h3>
+
+                <p>
+                    Add income and expense transactions to
+                    see your monthly chart.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+                         BOTTOM REPORT GRID
+        ================================================== -->
+
+        <section class="report-bottom-grid">
+
+
+            <!-- =================================================
+                           MONTHLY SUMMARY
+            ================================================== -->
+
+            <div class="report-card monthly-summary-card">
+
+
+                <div class="section-header">
+
+                    <div class="section-title-area">
+
+                        <div class="section-icon">
+                            ◫
+                        </div>
+
+
+                        <div>
+
+                            <h2>
+                                Monthly Summary
+                            </h2>
+
+                            <p>
+                                Income, expenses and savings.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TABLE -->
+
+                <div class="summary-table-wrapper"
+                     th:if="${!monthlyReport.isEmpty()}">
+
+
+                    <table class="summary-table">
+
+
+                        <thead>
+
+                        <tr>
+
+                            <th>
+                                Month
+                            </th>
+
+                            <th>
+                                Income
+                            </th>
+
+                            <th>
+                                Expenses
+                            </th>
+
+                            <th>
+                                Savings
+                            </th>
+
+                        </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                        <tr th:each="entry : ${monthlyReport}">
+
+
+                            <td>
+
+                                <span class="month-table-name"
+                                      th:text="${entry.key}">
+
+                                    JULY
+
+                                </span>
+
+                            </td>
+
+
+                            <td class="income-amount">
+
+                                ₹<span th:text="${entry.value[0]}">
+                                    0
+                                </span>
+
+                            </td>
+
+
+                            <td class="expense-amount">
+
+                                ₹<span th:text="${entry.value[1]}">
+                                    0
+                                </span>
+
+                            </td>
+
+
+                            <td class="saving-amount">
+
+                                ₹<span th:text="${
+                                    entry.value[0]
+                                    .subtract(entry.value[1])
+                                }">
+
+                                    0
+
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- NO SUMMARY -->
+
+                <div class="no-summary"
+                     th:if="${monthlyReport.isEmpty()}">
+
+                    No monthly data available.
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                         CATEGORY EXPENSES
+            ================================================== -->
+
+            <div class="report-card category-report-card">
+
+
+                <div class="section-header">
+
+                    <div class="section-title-area">
+
+                        <div class="section-icon">
+                            ₹
+                        </div>
+
+
+                        <div>
+
+                            <h2>
+                                Expenses by Category
+                            </h2>
+
+                            <p>
+                                See where your money is going.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CATEGORY DATA -->
+
+                <div class="category-list"
+                     th:if="${!categoryExpenses.isEmpty()}">
+
+
+                    <div class="category-item"
+                         th:each="entry : ${categoryExpenses}">
+
+
+                        <div class="category-left">
+
+
+                            <div class="category-icon">
+                                ₹
+                            </div>
+
+
+                            <div class="category-info">
+
+                                <span class="category-label">
+                                    CATEGORY
+                                </span>
+
+
+                                <strong th:text="${entry.key}">
+                                    Food
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="category-amount">
+
+                            ₹<span th:text="${entry.value}">
+                                0
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- NO CATEGORY DATA -->
+
+                <div class="empty-report"
+                     th:if="${categoryExpenses.isEmpty()}">
+
+
+                    <div class="empty-icon">
+                        ▥
+                    </div>
+
+
+                    <h3>
+                        No expense data yet
+                    </h3>
+
+
+                    <p>
+                        Add expense transactions and your
+                        category report will appear here.
+                    </p>
+
+
+                    <a th:href="@{/transactions/add}">
+                        ＋ Add Transaction
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =====================================================
+                         DARK MODE
+====================================================== -->
+
+<script>
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            const themeToggle =
+                document.getElementById("themeToggle");
+
+            const themeIcon =
+                document.getElementById("themeIcon");
+
+
+            /*
+             * Load saved theme
+             */
+
+            const savedTheme =
+                localStorage.getItem("budgetManagerTheme");
+
+
+            if (savedTheme === "dark") {
+
+                document.body.classList.add("dark-mode");
+
+                themeIcon.textContent = "☀️";
+
+            } else {
+
+                themeIcon.textContent = "🌙";
+
+            }
+
+
+            /*
+             * Theme button
+             */
+
+            themeToggle.addEventListener(
+                "click",
+                function () {
+
+                    document.body.classList.toggle(
+                        "dark-mode"
+                    );
+
+
+                    if (
+                        document.body.classList
+                            .contains("dark-mode")
+                    ) {
+
+                        localStorage.setItem(
+                            "budgetManagerTheme",
+                            "dark"
+                        );
+
+                        themeIcon.textContent = "☀️";
+
+                    } else {
+
+                        localStorage.setItem(
+                            "budgetManagerTheme",
+                            "light"
+                        );
+
+                        themeIcon.textContent = "🌙";
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>

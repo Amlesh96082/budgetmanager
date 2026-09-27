@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Login | BudgetManager</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/login.css}">
+
+</head>
+
+<body>
+
+<div class="page-container">
+
+
+    <!-- ================= LEFT SIDE ================= -->
+
+    <section class="left-section">
+
+
+        <!-- LOGO -->
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ₹
+            </div>
+
+            <div>
+
+                <h2>
+                    Budget<span>Manager</span>
+                </h2>
+
+                <p>
+                    Simple. Track. Save.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- LEFT CONTENT -->
+
+        <div class="left-content">
+
+
+            <div class="welcome-badge">
+                Your money, made simple
+            </div>
+
+
+            <h1>
+                Take control of your
+                <span>money.</span>
+            </h1>
+
+
+            <p class="description">
+
+                Track what you earn, understand where you
+                spend and save for the things that matter.
+
+            </p>
+
+
+            <!-- PREVIEW CARD -->
+
+            <div class="money-preview">
+
+                <div class="preview-header">
+
+                    <div>
+
+                        <p>Your Balance</p>
+
+                        <h2>₹ 24,500</h2>
+
+                    </div>
+
+                    <div class="wallet-icon">
+                        ₹
+                    </div>
+
+                </div>
+
+
+                <div class="preview-row">
+
+                    <div class="mini-card income">
+
+                        <span>↓</span>
+
+                        <div>
+                            <small>Money In</small>
+                            <strong>₹30,000</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="mini-card expense">
+
+                        <span>↑</span>
+
+                        <div>
+                            <small>Money Out</small>
+                            <strong>₹5,500</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SIMPLE FEATURES -->
+
+            <div class="features">
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <strong>Easy to use</strong>
+
+                        <p>
+                            No complicated finance knowledge needed.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        ₹
+                    </div>
+
+                    <div>
+
+                        <strong>Know your spending</strong>
+
+                        <p>
+                            See clearly where your money goes.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        ◎
+                    </div>
+
+                    <div>
+
+                        <strong>Reach your goals</strong>
+
+                        <p>
+                            Save little by little for what matters.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= RIGHT SIDE ================= -->
+
+    <section class="right-section">
+
+
+        <!-- MOBILE LOGO -->
+
+        <div class="mobile-logo">
+
+            <div class="logo-icon">
+                ₹
+            </div>
+
+            <h2>
+                Budget<span>Manager</span>
+            </h2>
+
+        </div>
+
+
+        <div class="login-card">
+
+
+            <div class="login-heading">
+
+                <div class="login-icon">
+                    👋
+                </div>
+
+
+                <h2>
+                    Welcome back
+                </h2>
+
+
+                <p>
+                    Login to continue managing your money.
+                </p>
+
+            </div>
+
+
+            <!-- LOGIN ERROR -->
+
+            <div class="error-message"
+                 th:if="${param.error}">
+
+                Invalid email or password.
+
+            </div>
+
+
+            <!-- LOGOUT SUCCESS -->
+
+            <div class="success-message"
+                 th:if="${param.logout}">
+
+                You have been logged out successfully.
+
+            </div>
+
+
+            <!-- LOGIN FORM -->
+
+            <form th:action="@{/login}"
+                  method="post">
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+
+                    <div class="input-box">
+
+                        <span class="input-icon">
+                            @
+                        </span>
+
+                        <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Enter your email"
+                                autocomplete="email"
+                                required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+
+                    <div class="input-box password-box">
+
+                        <span class="input-icon">
+                            ●
+                        </span>
+
+
+                        <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required>
+
+
+                        <button
+                                type="button"
+                                class="show-password"
+                                onclick="togglePassword()"
+                                aria-label="Show or hide password">
+
+                            Show
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- OPTIONS -->
+
+                <div class="options">
+
+
+                    <label class="remember">
+
+                        <input
+                                type="checkbox"
+                                name="remember-me">
+
+                        <span>
+                            Remember me
+                        </span>
+
+                    </label>
+
+
+                    <!-- Keep this disabled until feature is built -->
+
+                    <span class="forgot-disabled">
+                        Forgot password?
+                    </span>
+
+                </div>
+
+
+                <!-- LOGIN -->
+
+                <button
+                        type="submit"
+                        class="login-btn">
+
+                    Login to my account
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+
+            </form>
+
+
+            <!-- REGISTER -->
+
+            <div class="new-user">
+
+                <p>
+                    New to BudgetManager?
+                </p>
+
+
+                <a th:href="@{/register}"
+                   class="register-btn">
+
+                    Create a free account
+
+                </a>
+
+            </div>
+
+
+            <div class="security-note">
+
+                <span>✓</span>
+
+                Your account information stays private and secure.
+
+            </div>
+
+
+        </div>
+
+
+        <p class="copyright">
+
+            © 2026 BudgetManager
+
+        </p>
+
+
+    </section>
+
+</div>
+
+
+<script>
+
+    function togglePassword() {
+
+        const password =
+            document.getElementById("password");
+
+        const button =
+            document.querySelector(".show-password");
+
+
+        if (password.type === "password") {
+
+            password.type = "text";
+
+            button.textContent = "Hide";
+
+        } else {
+
+            password.type = "password";
+
+            button.textContent = "Show";
+
+        }
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

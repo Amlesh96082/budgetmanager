@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | BudgetManager</title>
+
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+</head>
+
+<body>
+
+<div class="app-container">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">▣</div>
+            <h2>Budget<span>Manager</span></h2>
+        </div>
+
+        <nav>
+
+            <a th:href="@{/dashboard}" class="nav-link active">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a th:href="@{/transactions}" class="nav-link">
+                <span>⇄</span>
+                Transactions
+            </a>
+
+            <a th:href="@{/budgets}" class="nav-link">
+                <span>₹</span>
+                Budget
+            </a>
+
+            <a th:href="@{/goals}" class="nav-link">
+                <span>◉</span>
+                Goals
+            </a>
+
+            <a th:href="@{/reports}" class="nav-link">
+                <span>▥</span>
+                Reports
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a th:href="@{/settings}" class="nav-link">
+                <span>⚙</span>
+                Settings
+            </a>
+
+            <form th:action="@{/logout}"
+                  method="post"
+                  class="logout-form">
+
+                <button type="submit"
+                        class="nav-link logout-button">
+
+                    <span>↪</span>
+                    Logout
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main-content">
+
+
+        <!-- ================= HEADER ================= -->
+
+        <header>
+
+            <div class="heading-area">
+
+                <p class="welcome-text">
+                    Welcome back 👋
+                </p>
+
+                <h1>Your Money, Made Simple</h1>
+
+                <p class="heading-description">
+                    See where your money is going at a glance.
+                </p>
+
+            </div>
+
+
+            <div class="header-right">
+
+                <button class="theme-toggle"
+                        id="themeToggle"
+                        type="button">
+                    🌙
+                </button>
+
+
+                <div class="user-info">
+
+                    <div class="avatar">U</div>
+
+                    <div class="user-details">
+
+                        <strong>My Account</strong>
+
+                        <p th:text="${email}">
+                            user@email.com
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= SUMMARY ================= -->
+
+        <section class="summary-grid">
+
+
+            <!-- BALANCE -->
+
+            <div class="summary-card balance-card">
+
+                <div class="card-top">
+
+                    <div>
+                        <span>Available Balance</span>
+                        <small>Your current money</small>
+                    </div>
+
+                    <div class="card-icon">
+                        ₹
+                    </div>
+
+                </div>
+
+
+                <h2>
+                    ₹<span th:text="${balance}">0.00</span>
+                </h2>
+
+
+                <p class="balance-message">
+                    Money available to use
+                </p>
+
+            </div>
+
+
+            <!-- INCOME -->
+
+            <div class="summary-card">
+
+                <div class="card-top">
+
+                    <div>
+                        <span>Money In</span>
+                        <small>Total income</small>
+                    </div>
+
+                    <div class="card-icon income-icon">
+                        ↓
+                    </div>
+
+                </div>
+
+
+                <h2>
+                    ₹<span th:text="${totalIncome}">
+                        0.00
+                    </span>
+                </h2>
+
+
+                <p class="positive">
+                    Money you received
+                </p>
+
+            </div>
+
+
+            <!-- EXPENSE -->
+
+            <div class="summary-card">
+
+                <div class="card-top">
+
+                    <div>
+                        <span>Money Out</span>
+                        <small>Total spending</small>
+                    </div>
+
+                    <div class="card-icon expense-icon">
+                        ↑
+                    </div>
+
+                </div>
+
+
+                <h2>
+                    ₹<span th:text="${totalExpense}">
+                        0.00
+                    </span>
+                </h2>
+
+
+                <p class="negative">
+                    Money you spent
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= ACTION BUTTONS ================= -->
+
+        <section class="actions">
+
+            <a th:href="@{/transactions/add(type='INCOME')}"
+               class="action-link income-btn">
+
+                + Add Income
+
+            </a>
+
+
+            <a th:href="@{/transactions/add(type='EXPENSE')}"
+               class="action-link expense-btn">
+
+                + Add Expense
+
+            </a>
+
+        </section>
+
+
+        <!-- ================= CHART + BUDGET ================= -->
+
+        <section class="dashboard-grid">
+
+
+            <!-- ================= CHART ================= -->
+
+            <div class="content-card chart-card">
+
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h3>
+                            Money In vs Money Out
+                        </h3>
+
+                        <p>
+                            See how your money moved
+                        </p>
+
+                    </div>
+
+
+                    <select>
+
+                        <option>
+                            Last 6 Months
+                        </option>
+
+                        <option>
+                            This Year
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="fake-chart">
+
+
+                    <div class="chart-column"
+                         th:each="item : ${monthlySummary}">
+
+
+                        <div class="income-bar"
+                             th:style="'height:' + ${item.incomeHeight} + '%'"
+                             th:title="'Income: ₹' + ${item.income}">
+                        </div>
+
+
+                        <div class="expense-bar"
+                             th:style="'height:' + ${item.expenseHeight} + '%'"
+                             th:title="'Expense: ₹' + ${item.expense}">
+                        </div>
+
+
+                        <span th:text="${item.month}">
+                            Month
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-legend">
+
+                    <span class="income-dot">
+                        ● Money In
+                    </span>
+
+                    <span class="expense-dot">
+                        ● Money Out
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= BUDGET ================= -->
+
+            <div class="content-card budget-card">
+
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h3>
+                            This Month's Budget
+                        </h3>
+
+                        <p>
+                            Keep your spending under control
+                        </p>
+
+                    </div>
+
+
+                    <a th:href="@{/budgets}">
+                        View All
+                    </a>
+
+                </div>
+
+
+                <!-- BUDGET ITEMS -->
+
+                <div class="budget-item"
+                     th:each="item : ${budgetProgress}">
+
+
+                    <div class="budget-info">
+
+
+                        <span th:text="${item.category}">
+                            Category
+                        </span>
+
+
+                        <strong>
+
+                            ₹<span th:text="${item.spentAmount}">
+                                0
+                            </span>
+
+                            /
+
+                            ₹<span th:text="${item.budgetAmount}">
+                                0
+                            </span>
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="progress">
+
+                        <div th:style="'width:' + ${item.percentage} + '%'">
+                        </div>
+
+                    </div>
+
+
+                    <div class="budget-percentage">
+
+                        <span th:text="${item.percentage + '%'}">
+                            0%
+                        </span>
+
+                        used
+
+                    </div>
+
+                </div>
+
+
+                <!-- NO BUDGET -->
+
+                <div class="no-budget"
+                     th:if="${#lists.isEmpty(budgetProgress)}">
+
+                    <div class="empty-icon">
+                        ₹
+                    </div>
+
+                    <h4>No budget yet</h4>
+
+                    <p>
+                        Set a monthly budget to control your spending.
+                    </p>
+
+                    <a th:href="@{/budgets}">
+                        Set Budget
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= RECENT TRANSACTIONS ================= -->
+
+        <section class="content-card transactions">
+
+
+            <div class="section-header">
+
+                <div>
+
+                    <h3>
+                        Recent Activity
+                    </h3>
+
+                    <p>
+                        Your latest money activity
+                    </p>
+
+                </div>
+
+
+                <a th:href="@{/transactions}">
+                    View All
+                </a>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+
+                    <thead>
+
+                    <tr>
+
+                        <th>Transaction</th>
+
+                        <th>Category</th>
+
+                        <th>Date</th>
+
+                        <th>Type</th>
+
+                        <th>Amount</th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                    <!-- REAL TRANSACTIONS -->
+
+                    <tr th:each="transaction : ${transactions}">
+
+
+                        <td th:text="${transaction.title}">
+                            Transaction
+                        </td>
+
+
+                        <td th:text="${transaction.category}">
+                            Category
+                        </td>
+
+
+                        <td th:text="${transaction.transactionDate}">
+                            Date
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                    th:text="${transaction.type}"
+                                    th:class="${transaction.type == 'INCOME'}
+                                    ? 'income-label'
+                                    : 'expense-label'">
+
+                                Type
+
+                            </span>
+
+                        </td>
+
+
+                        <td
+                                th:text="${transaction.type == 'INCOME'
+                                ? '+ ₹' + transaction.amount
+                                : '- ₹' + transaction.amount}"
+
+                                th:class="${transaction.type == 'INCOME'
+                                ? 'positive'
+                                : 'negative'}">
+
+                            Amount
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- EMPTY -->
+
+                    <tr th:if="${#lists.isEmpty(transactions)}">
+
+                        <td colspan="5"
+                            class="empty-transaction">
+
+                            No transactions yet.
+
+                        </td>
+
+                    </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ================= DARK MODE ================= -->
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const themeButton =
+            document.getElementById("themeToggle");
+
+        const savedTheme =
+            localStorage.getItem("theme");
+
+
+        if (savedTheme === "dark") {
+
+            document.body.classList.add("dark-mode");
+
+            themeButton.textContent = "☀️";
+
+        }
+
+
+        themeButton.addEventListener("click", function () {
+
+            document.body.classList.toggle("dark-mode");
+
+
+            if (document.body.classList.contains("dark-mode")) {
+
+                themeButton.textContent = "☀️";
+
+                localStorage.setItem(
+                    "theme",
+                    "dark"
+                );
+
+            }
+
+            else {
+
+                themeButton.textContent = "🌙";
+
+                localStorage.setItem(
+                    "theme",
+                    "light"
+                );
+
+            }
+
+        });
+
+    });
+
+</script>
+
+
+</body>
+</html>

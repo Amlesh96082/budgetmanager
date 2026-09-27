@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Goal | BudgetManager</title>
+
+    <link rel="stylesheet" th:href="@{/css/add-goal.css}">
+</head>
+
+<body>
+
+<div class="page-container">
+
+    <div class="goal-form-card">
+
+        <!-- HEADER -->
+
+        <div class="form-header">
+
+            <a th:href="@{/goals}" class="back-btn">
+                ← Back
+            </a>
+
+            <div class="goal-icon">
+                ◎
+            </div>
+
+            <h1>Create Financial Goal</h1>
+
+            <p>
+                Set a target and start tracking your savings.
+            </p>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <form th:action="@{/goals/add}"
+              th:object="${goal}"
+              method="post">
+
+
+            <!-- GOAL TITLE -->
+
+            <div class="form-group">
+
+                <label for="title">
+                    Goal Name
+                </label>
+
+                <input type="text"
+                       id="title"
+                       th:field="*{title}"
+                       placeholder="Example: Buy a Laptop"
+                       required>
+
+            </div>
+
+
+            <!-- TARGET AMOUNT -->
+
+            <div class="form-group">
+
+                <label for="targetAmount">
+                    Target Amount
+                </label>
+
+                <div class="amount-input">
+
+                    <span>₹</span>
+
+                    <input type="number"
+                           id="targetAmount"
+                           th:field="*{targetAmount}"
+                           placeholder="80000"
+                           min="1"
+                           step="0.01"
+                           required>
+
+                </div>
+
+            </div>
+
+
+            <!-- SAVED AMOUNT -->
+
+            <div class="form-group">
+
+                <label for="savedAmount">
+                    Already Saved
+                </label>
+
+                <div class="amount-input">
+
+                    <span>₹</span>
+
+                    <input type="number"
+                           id="savedAmount"
+                           th:field="*{savedAmount}"
+                           placeholder="0"
+                           min="0"
+                           step="0.01">
+
+                </div>
+
+                <small>
+                    Enter 0 if you haven't started saving yet.
+                </small>
+
+            </div>
+
+
+            <!-- TARGET DATE -->
+
+            <div class="form-group">
+
+                <label for="targetDate">
+                    Target Date
+                </label>
+
+                <input type="date"
+                       id="targetDate"
+                       th:field="*{targetDate}">
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="form-actions">
+
+                <a th:href="@{/goals}"
+                   class="cancel-btn">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="save-btn">
+                    Create Goal
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

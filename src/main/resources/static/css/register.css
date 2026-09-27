@@ -1,0 +1,313 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #ffffff;
+    color: #10182f;
+}
+
+.page-container {
+    min-height: 100vh;
+    display: flex;
+}
+
+
+/* LEFT */
+
+.left-section {
+    width: 47%;
+    min-height: 100vh;
+    padding: 38px 65px;
+
+    background:
+            radial-gradient(circle at 90% 10%, #ded7ff 0, transparent 35%),
+            linear-gradient(135deg, #faf9ff, #f2efff);
+
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    width: 38px;
+    height: 38px;
+
+    background: linear-gradient(135deg, #8b6cff, #5b35ef);
+
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 9px;
+
+    font-size: 20px;
+}
+
+.logo h2 {
+    font-size: 25px;
+}
+
+.logo span {
+    color: #6347ed;
+}
+
+
+.left-content {
+    margin-top: 105px;
+    max-width: 520px;
+}
+
+.welcome {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.left-content h1 {
+    font-size: 49px;
+    line-height: 1.12;
+    margin-bottom: 20px;
+}
+
+.left-content h1 span {
+    color: #6546ef;
+}
+
+.description {
+    color: #697086;
+    font-size: 17px;
+    line-height: 1.7;
+    max-width: 470px;
+}
+
+
+/* FEATURES */
+
+.features {
+    margin-top: 70px;
+
+    display: flex;
+    gap: 20px;
+}
+
+.feature {
+    width: 150px;
+}
+
+.feature strong {
+    color: #4f35d8;
+}
+
+.feature p {
+    font-size: 13px;
+    color: #747b8d;
+    line-height: 1.5;
+    margin-top: 7px;
+}
+
+
+/* RIGHT */
+
+.right-section {
+    width: 53%;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px;
+}
+
+.register-card {
+    width: 100%;
+    max-width: 540px;
+
+    padding: 45px;
+
+    border: 1px solid #e5e5ed;
+    border-radius: 18px;
+
+    box-shadow: 0 12px 40px rgba(31, 24, 74, 0.07);
+}
+
+.register-card h2 {
+    text-align: center;
+    font-size: 30px;
+}
+
+.subtitle {
+    text-align: center;
+
+    color: #777e91;
+
+    margin-top: 10px;
+    margin-bottom: 35px;
+}
+
+
+/* FORM */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+
+    font-weight: 600;
+    font-size: 14px;
+
+    margin-bottom: 9px;
+}
+
+.form-group input {
+    width: 100%;
+
+    padding: 15px 16px;
+
+    border: 1px solid #d8dbe5;
+    border-radius: 9px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+.form-group input:focus {
+    border-color: #6546ef;
+
+    box-shadow: 0 0 0 3px rgba(101, 70, 239, 0.1);
+}
+
+
+/* REGISTER */
+
+.register-btn {
+    width: 100%;
+
+    padding: 15px;
+
+    margin-top: 10px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: linear-gradient(90deg, #673cf1, #5633dc);
+
+    color: white;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.register-btn:hover {
+    opacity: 0.92;
+}
+
+
+/* DIVIDER */
+
+.divider {
+    display: flex;
+    align-items: center;
+
+    margin: 27px 0;
+
+    color: #969bad;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background: #dedfe5;
+}
+
+.divider span {
+    padding: 0 15px;
+}
+
+
+/* GOOGLE */
+
+.google-btn {
+    width: 100%;
+
+    padding: 14px;
+
+    background: white;
+
+    border: 1px solid #d8dbe5;
+    border-radius: 9px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+/* LOGIN */
+
+.login-text {
+    text-align: center;
+
+    margin-top: 30px;
+
+    color: #747b8d;
+}
+
+.login-text a {
+    color: #5d3ce8;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+
+    .left-section {
+        display: none;
+    }
+
+    .right-section {
+        width: 100%;
+    }
+
+}
+
+@media (max-width: 550px) {
+
+    .right-section {
+        padding: 20px;
+    }
+
+    .register-card {
+        padding: 30px 22px;
+    }
+
+}

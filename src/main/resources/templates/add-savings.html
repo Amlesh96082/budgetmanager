@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Savings | BudgetManager</title>
+
+    <link rel="stylesheet" th:href="@{/css/add-savings.css}">
+</head>
+
+<body>
+
+<div class="page-container">
+
+    <div class="savings-card">
+
+        <!-- BACK -->
+
+        <a th:href="@{/goals}" class="back-btn">
+            ← Back to Goals
+        </a>
+
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <div class="goal-icon">
+                ◎
+            </div>
+
+            <h1>Add Savings</h1>
+
+            <p>
+                Add money towards your financial goal.
+            </p>
+
+        </div>
+
+
+        <!-- GOAL INFORMATION -->
+
+        <div class="goal-info">
+
+            <h2 th:text="${goal.title}">
+                Buy Laptop
+            </h2>
+
+
+            <div class="money-info">
+
+                <div>
+                    <span>Currently Saved</span>
+
+                    <strong>
+                        ₹<span th:text="${goal.savedAmount}">
+                            0
+                        </span>
+                    </strong>
+                </div>
+
+
+                <div>
+                    <span>Target Amount</span>
+
+                    <strong>
+                        ₹<span th:text="${goal.targetAmount}">
+                            0
+                        </span>
+                    </strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ADD SAVINGS FORM -->
+
+        <form th:action="@{/goals/{id}/add-savings(id=${goal.id})}"
+              method="post">
+
+            <div class="form-group">
+
+                <label for="amount">
+                    Amount to Add
+                </label>
+
+
+                <div class="amount-input">
+
+                    <span>₹</span>
+
+                    <input type="number"
+                           id="amount"
+                           name="amount"
+                           placeholder="Enter amount"
+                           min="0.01"
+                           step="0.01"
+                           required>
+
+                </div>
+
+                <small>
+                    Enter the amount you want to add to this goal.
+                </small>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="form-actions">
+
+                <a th:href="@{/goals}"
+                   class="cancel-btn">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="save-btn">
+                    + Add Savings
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>
